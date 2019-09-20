@@ -15,50 +15,12 @@ class DamageStatusList:
     headshots: int
     damage: int
 
-@dataclass
-class GAUNTLET(DamageStatusList):
-    pass
-
-@dataclass
-class MACHINEGUN(DamageStatusList):
-    pass
-
-@dataclass
-class MACHINEGUN_GRADE1(DamageStatusList):
-    pass
-
-@dataclass
-class SHOTGUN(DamageStatusList):
-    pass
-
-@dataclass
-class SHOTGUN_GRADE1(DamageStatusList):
-    pass
-
-@dataclass
-class NAILGUN(DamageStatusList):
-    pass
-
-@dataclass
-class NAILGUN_GRADE1(DamageStatusList):
-    pass
-
-@dataclass
-class ROCKET_LAUNCHER(DamageStatusList):
-    pass
-
-@dataclass
-class LIGHTNING_GUN(DamageStatusList):
-    pass
-
-@dataclass
-class RAILGUN(DamageStatusList):
-    pass
-
-@dataclass
-class LAGBOLT(DamageStatusList):
-    pass
-
+    def __init__(self, weapon_data):
+        self.hits = weapon_data["hits"]
+        self.shots = weapon_data["shots"]
+        self.kills = weapon_data["kills"]
+        self.headshots = weapon_data["headshots"]
+        self.damage = weapon_data["damage"]
 
 
 @dataclass
@@ -95,82 +57,31 @@ class DuelStat:
 @dataclass
 class Champion:
     duel_stat: DuelStat
-    GAUNTLET_stat: GAUNTLET
-    MACHINEGUN_stat: MACHINEGUN
-    MACHINEGUN_GRADE1_stat: MACHINEGUN_GRADE1
-    SHOTGUN_stat: SHOTGUN
-    SHOTGUN_GRADE1_stat: SHOTGUN_GRADE1
-    NAILGUN_stat: NAILGUN
-    NAILGUN_GRADE1_stat: NAILGUN_GRADE1
-    ROCKET_LAUNCHER_stat: ROCKET_LAUNCHER
-    LIGHTNING_GUN_stat: LIGHTNING_GUN
-    RAILGUN_stat: RAILGUN
-    LAGBOLT_stat: LAGBOLT
+    GAUNTLET_stat: DamageStatusList
+    MACHINEGUN_stat: DamageStatusList
+    MACHINEGUN_GRADE1_stat: DamageStatusList
+    SHOTGUN_stat: DamageStatusList
+    SHOTGUN_GRADE1_stat: DamageStatusList
+    NAILGUN_stat: DamageStatusList
+    NAILGUN_GRADE1_stat: DamageStatusList
+    ROCKET_LAUNCHER_stat: DamageStatusList
+    LIGHTNING_GUN_stat: DamageStatusList
+    RAILGUN_stat: DamageStatusList
+    LAGBOLT_stat: DamageStatusList
 
-@dataclass
-class RANGER(Champion):
     def __init__(self, player_data):
         self.duel_stat = DuelStat(player_data["gameModes"]["GameModeDuel"])
-
-@dataclass
-class SCALEBEARER(Champion):
-    pass
-
-@dataclass
-class VISOR(Champion):
-    pass
-
-@dataclass
-class ANARKI(Champion):
-    pass
-
-@dataclass
-class NYX(Champion):
-    pass
-
-@dataclass
-class SORLAG(Champion):
-    pass
-
-@dataclass
-class CLUTCH(Champion):
-    pass
-
-@dataclass
-class GALENA(Champion):
-    pass
-
-@dataclass
-class SLASH(Champion):
-    pass
-
-@dataclass
-class DOOM_SLAYER(Champion):
-    pass
-
-@dataclass
-class BJ_BLAZKOWICZ(Champion):
-    pass
-
-@dataclass
-class KEEL(Champion):
-    pass
-
-@dataclass
-class STROGG(Champion):
-    pass
-
-@dataclass
-class DEATH_KNIGHT(Champion):
-    pass
-
-@dataclass
-class ATHENA(Champion):
-    pass
-
-@dataclass
-class EISEN(Champion):
-    pass
+        self.GAUNTLET_stat = DamageStatusList(player_data["damageStatusList"]["GAUNTLET"])
+        self.MACHINEGUN_stat = DamageStatusList(player_data["damageStatusList"]["MACHINEGUN"])
+        self.MACHINEGUN_GRADE1_stat = DamageStatusList(player_data["damageStatusList"]["MACHINEGUN_GRADE1"])
+        self.SHOTGUN_stat = DamageStatusList(player_data["damageStatusList"]["SHOTGUN"])
+        self.SHOTGUN_GRADE1_stat = DamageStatusList(player_data["damageStatusList"]["SHOTGUN_GRADE1"])
+        self.NAILGUN_stat = DamageStatusList(player_data["damageStatusList"]["NAILGUN"])
+        self.NAILGUN_GRADE1_stat = DamageStatusList(player_data["damageStatusList"]["NAILGUN_GRADE1"])
+        self.ROCKET_LAUNCHER_stat = DamageStatusList(player_data["damageStatusList"]["ROCKET_LAUNCHER"])
+        self.LIGHTNING_GUN_stat = DamageStatusList(player_data["damageStatusList"]["LIGHTNING_GUN"])
+        self.RAILGUN_stat = DamageStatusList(player_data["damageStatusList"]["RAILGUN"])
+        self.LAGBOLT_stat = DamageStatusList(player_data["damageStatusList"]["LAGBOLT"])
 
 
 @dataclass
@@ -180,22 +91,22 @@ class PlayerStats:
     player_exp: int
     duel_rating: int
     duel_rating_games_count: int
-    RANGER_stat: RANGER
-    SCALEBEARER_stat: SCALEBEARER
-    VISOR_stat: VISOR
-    ANARKI_stat: ANARKI
-    NYX_stat: NYX
-    SORLAG_stat: SORLAG
-    CLUTCH_stat: CLUTCH
-    GALENA_stat: GALENA
-    SLASH_stat: SLASH
-    DOOM_SLAYER_stat: DOOM_SLAYER
-    BJ_BLAZKOWICZ_stat: BJ_BLAZKOWICZ
-    KEEL_stat: KEEL
-    STROGG_stat: STROGG
-    DEATH_KNIGHT_stat: DEATH_KNIGHT
-    ATHENA_stat: ATHENA
-    EISEN_stat: EISEN
+    RANGER_stat: Champion
+    SCALEBEARER_stat: Champion
+    VISOR_stat: Champion
+    ANARKI_stat: Champion
+    NYX_stat: Champion
+    SORLAG_stat: Champion
+    CLUTCH_stat: Champion
+    GALENA_stat: Champion
+    SLASH_stat: Champion
+    DOOM_SLAYER_stat: Champion
+    BJ_BLAZKOWICZ_stat: Champion
+    KEEL_stat: Champion
+    STROGG_stat: Champion
+    DEATH_KNIGHT_stat: Champion
+    ATHENA_stat: Champion
+    EISEN_stat: Champion
 
     def __init__(self, player_data):
         self.name = player_data["name"]
@@ -204,7 +115,22 @@ class PlayerStats:
         self.duel_rating = player_data["playerRatings"]["duel"]["rating"]
         self.duel_rating_games_count = player_data["playerRatings"]["duel"]["gamesCount"]
 
-        self.RANGER_stat = RANGER(player_data["playerProfileStats"]["champions"]["RANGER"])
+        self.RANGER_stat = Champion(player_data["playerProfileStats"]["champions"]["RANGER"])
+        self.SCALEBEARER_stat = Champion(player_data["playerProfileStats"]["champions"]["SCALEBEARER"])
+        self.VISOR_stat = Champion(player_data["playerProfileStats"]["champions"]["VISOR"])
+        self.ANARKI_stat = Champion(player_data["playerProfileStats"]["champions"]["ANARKI"])
+        self.NYX_stat = Champion(player_data["playerProfileStats"]["champions"]["NYX"])
+        self.SORLAG_stat = Champion(player_data["playerProfileStats"]["champions"]["SORLAG"])
+        self.CLUTCH_stat = Champion(player_data["playerProfileStats"]["champions"]["CLUTCH"])
+        self.GALENA_stat = Champion(player_data["playerProfileStats"]["champions"]["GALENA"])
+        self.SLASH_stat = Champion(player_data["playerProfileStats"]["champions"]["SLASH"])
+        self.DOOM_SLAYER_stat = Champion(player_data["playerProfileStats"]["champions"]["DOOM_SLAYER"])
+        self.BJ_BLAZKOWICZ_stat = Champion(player_data["playerProfileStats"]["champions"]["BJ_BLAZKOWICZ"])
+        self.KEEL_stat = Champion(player_data["playerProfileStats"]["champions"]["KEEL"])
+        self.STROGG_stat = Champion(player_data["playerProfileStats"]["champions"]["STROGG"])
+        self.DEATH_KNIGHT_stat = Champion(player_data["playerProfileStats"]["champions"]["DEATH_KNIGHT"])
+        self.ATHENA_stat = Champion(player_data["playerProfileStats"]["champions"]["ATHENA"])
+        self.EISEN_stat = Champion(player_data["playerProfileStats"]["champions"]["EISEN"])
 
 '''
     def to_obj(self, player_data):
